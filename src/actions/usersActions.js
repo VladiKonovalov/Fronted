@@ -1,3 +1,5 @@
+
+
 export const loginAction = (username, password) => {
   return async (dispach) => {
     const body = {
@@ -6,13 +8,14 @@ export const loginAction = (username, password) => {
     }
     const options = {
       method: 'POST',
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" ,
+          "Authorization" :"Bearer " + window.localStorage.Autorization
+                        },
       body: JSON.stringify(body)
     }
 
 
      fetch('https://vladikonov.herokuapp.com/users/login', options)
-//   fetch('https://reqres.in/api/login', options)
       .then(function (response) { 
         return response.json(); 
       }).then(function (data) {
@@ -29,15 +32,13 @@ export const loginAction = (username, password) => {
   }
 }
 
+
 export const singupAction = (username, password,isAdmin) => {
   return async (dispach) => {
-    console.log("username", username);
-    console.log("password", password);
-    console.log("isadmin", isAdmin);
 
 
     const body = {
-      username,
+       username,
       password,
       isAdmin
     }
@@ -48,13 +49,11 @@ export const singupAction = (username, password,isAdmin) => {
     }
 
 
-    //  fetch('http://localhost:3001/users/login', options)
-   fetch('https://vladikonov.herokuapp.com/users/singup', options)
+   fetch('https://vladikonov.herokuapp.com/users/signup', options)
       .then(function (response) { 
         return response.json(); 
       }).then(function (data) {
-        const isSignup = (typeof data.token !== 'undefined' && data.token !== '' && data.id !=='' && data.response === 200);
-
+        const isSignup =  (typeof data.message);
         return dispach({
           type: "SIGNUP",
           payload: isSignup
@@ -62,6 +61,7 @@ export const singupAction = (username, password,isAdmin) => {
       });
   }
 }
+
 
 export const logoutAction = () =>{
   return{
@@ -71,22 +71,18 @@ export const logoutAction = () =>{
 }
 
 
-
-
-export const getUsersAction = (pageNumber) => {
+export const getTasksAction = (pageNumber) => {
 
   const options = {
     method: 'GET',
-    headers: { "Content-Type": "application/x-www-form-urlencoded" 
-   ,"Autorization": window.localStorage.Autorization,
-   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-
-  }
+    headers: {"Content-Type": "application/json" ,
+    "Authorization" :"Bearer " + window.localStorage.Autorization
+                    }
   }
 
   return async (dispach) => {
- //  fetch(`https://vladikonov.herokuapp.com/tasks?page=${pageNumber}`,options)
- fetch(`https://reqres.in/api/users?page=${pageNumber}`,options)
+   fetch(`https://vladikonov.herokuapp.com/tasks`,options)
+ //fetch(`https://reqres.in/api/users?page=${pageNumber}`,options)
       .then(function (response) { 
         return response.json(); 
       }).then(function (data) {
@@ -103,9 +99,16 @@ export const getUsersAction = (pageNumber) => {
 export const getTaskAction = (taskId) => {
   return async (dispach) => {
 
-//    fetch('http://localhost:3000/tasks/${taskId}')
 
-    fetch(`https://reqres.in/api/users/${taskId}`)
+
+    const options = {
+      method: 'GET',
+      headers: { "Content-Type": "application/json" ,
+      "Authorization" :"Bearer " + window.localStorage.Autorization
+                }
+    }
+    //fetch('http://localhost:3000/tasks/${taskId}'
+    fetch(`https://reqres.in/api/users/${taskId}`,options)
       .then(function (response) { 
         return response.json(); 
       }).then(function (data) {
@@ -127,18 +130,16 @@ export const postTaskAction = (title,description) => {
     }
     const options = {
       method: 'POST',
-      headers: { "Content-Type": "application/json",
-      Authorization :"Bearer " + window.localStorage.Autorization
-    },
-      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" ,
+      "Authorization" :"Bearer " + window.localStorage.Autorization
+                },
+      body: JSON.stringify(body)
     }
 
- //   fetch('https://reqres.in/api/users', options)
 
-     fetch('https://vladikonov.herokuapp.com/tasks',options)
+    fetch('https://vladikonov.herokuapp.com/tasks',options)
       .then(function (data) {
-        const ispost = (typeof data.name !== 'undefined' && data.status_code !== '');
-        console.log("the post happen", data)
+        const ispost = (typeof data.title);
         return dispach({
           type: "POST_TASK",
           payload: ispost
@@ -154,13 +155,12 @@ export const deleteUserTask = (taskId) => {
     
     const options = {
       method: 'DELETE',
-      headers: { "Content-Type": "application/json" }
-//      ,Autorization: {token}
-    }
+      headers: {"Content-Type": "application/json" ,
+      "Authorization" :"Bearer " + window.localStorage.Autorization
+           }
+          }
 
-
-    //  fetch('http://localhost:3000/users/login', options)
-    fetch(`https://reqres.in/api/users/${taskId}`, options)
+    fetch(`https://vladikonov.herokuapp.com/tasks/${taskId}`, options)
       .then(function (response) { 
     //    return response.json(); 
       }).then(function (data) {
@@ -179,12 +179,13 @@ export const viewUserTask = (taskId) => {
     
     const options = {
       method: 'GET',
-      headers: { "Content-Type": "application/json" }
-//      ,Autorization: {token}
+      headers: { "Content-Type": "application/json" ,
+      "Authorization" :"Bearer " + window.localStorage.Autorization
     }
+  }
 
 
-    fetch('https://reqres.in/api/users/2', options)
+    fetch(`https://vladikonov.herokuapp.com/tasks/${taskId}`, options)
       .then(function (response) { 
    //     return response.json(); 
       }).then(function (data) {
@@ -205,15 +206,15 @@ export const editUserTask = (taskId) => {
     
     const options = {
       method: 'PATCH',
-      headers: { "Content-Type": "application/json" }
-//      ,Autorization: {token}
+      headers: {  "Content-Type": "application/json" ,
+      "Authorization" :"Bearer " + window.localStorage.Autorization
+    }
     }
 
 
 
-    fetch('https://reqres.in/api/users/2', options)
+    fetch(`https://vladikonov.herokuapp.com/tasks/${taskId}`, options)
       .then(function (response) { 
-  //      return response.json(); 
       }).then(function (data) {
 
         return dispach({

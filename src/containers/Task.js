@@ -5,13 +5,13 @@ import TaskForm from '../components/TaskForm';
 
 class Task extends Component {
   componentDidMount() {
-    this.props.getUser(this.taskId);
+    this.props.getTask(this.taskId);
 
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.taskId !== this.taskId) {
-      this.props.getUser(this.taskId);
+      this.props.getTask(this.taskId);
     }
   }
   get taskId() {
@@ -26,7 +26,6 @@ class Task extends Component {
   }
 
   render() {
-    console.log("this.props.user.first_name",this.props.user.first_name)
     return (
       <div className="task-form">
       <TaskForm handlerLogin={this.handlerTaskSubmit} />
@@ -45,14 +44,14 @@ class Task extends Component {
 const mapStateToProps = state => {
 
   return {
-                user: state.usersReducer.userActive  }
+                task: state.taskReducer.taskActive  }
 
 }
 
 const mapDispatchToProps = dispatch => {
 
   return {
-                getUser(taskId){
+                getTask(taskId){
                   dispatch(getTaskAction(taskId));
     },
     // SubmitTask(){

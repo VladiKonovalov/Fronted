@@ -15,12 +15,8 @@ const initState = {
     last_name: null,
     avatar: null
   },
-  tasks: {
-    _id: null,
-    title: null,
-    description: null,
-    creater: null
-    }
+
+  
 }
 
 const usersReducer = (state = initState, action) => {
@@ -34,10 +30,11 @@ const usersReducer = (state = initState, action) => {
       case "SINGUP":
         state = { ...state, isSignup: action.payload }
         break;
-  
+  //
     case "SET_TASKS":
-      state = { ...state, users: action.payload ,autorization:action.token }
+      state = { ...state, users: action.payload }
       break;
+      //
     default:
       break;
   }

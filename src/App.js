@@ -17,7 +17,7 @@ class App extends Component {
 
     if (this.props.isLogged === true) {
       loginLink = <li className="nav-item">        <Link className="nav-link" to="/login" onClick={this.handlerLogout}> logout </Link></li>;
-      SingUpLink = <li className="nav-item">        <Link className="nav-link" to="/singup" onClick={this.handlerLogout}> logout </Link></li>;
+      SingUpLink = <li className="nav-item">        <Link className="nav-link" to="/singup"  onClick={this.handlerLogout}>  </Link></li>;
     }
     return (
       <Router>
