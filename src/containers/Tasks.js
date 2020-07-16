@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getTasksAction, deleteUserTask, editUserTask, viewUserTask } from '../actions/usersActions';
+import { getTasksAction, getTaskAction } from '../actions/usersActions';
 
 class Tasks extends Component {
     componentDidMount() {
-        this.props.getTasks(this.pageNumber);
-        this.props.deleteTask(this.taskId);
-        this.props.editTask(this.taskId);
+        this.props.getTasks(1);
         this.props.viewTask(this.taskId);
-
     }
 
     get pageNumber() {
@@ -19,11 +16,15 @@ class Tasks extends Component {
 
 
     render() {
+
         const pagesButtonRender = this.getPagesButtonRender();
+        const _data= this.props.tasks.tasks;
+
+
 
         return (
             <div className="users-page">
-                <table className="table">
+                <table className="table table-hover table-dark">
                     <thead className="thead-dark">
                         <tr>
                             <th scope="col">#</th>
@@ -31,22 +32,22 @@ class Tasks extends Component {
                             <th scope="col">Descrition</th>
                             <th scope="col">Creator</th>
                             <th scope="col">Date Created</th>
-                            <th scope="col">Actions</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.tasks.tasks.map((task, taskID) =>
-                            <tr key={taskID}>
-                                <th scope="row" >  2{task.title}</th>
-                                <td >3{task.description}</td>
-                                <td >4{task.creater}</td>
-                                <td >5{task.dateCreated}</td>
+                        {_data.map((task, taskID) =>
+                            <tr key={taskID}> 
+                                <th scope="row" > {taskID +1}</th>
+                                <td >{task.title}</td>
+                                <td >{task.description}</td>
+                                <td >{task.creater}</td>
+                                <td >{task.createdDate}</td>
 
                                 <td >
-                                    <span className="pointer" onClick={() => this.handlerClickDeleteTask(task.taskID)}>delete  </span>
-                                    <span className="pointer" onClick={() => this.handlerClickViewTask(task.taskID)}>edit  </span>
-                                    <span className="pointer" onClick={() => this.handlerClickEditTask(task.taskID)}>view  </span>
+                                    <span className="pointer" onClick={() => this.handlerClickDeleteTask(task._id)}>delete  </span>
+                                    <span className="pointer" onClick={() => this.handlerClickViewTask(task._id)}>edit  </span>
+                                    <span className="pointer" onClick={() => this.handlerClickEditTask(task._id)}>view  </span>
                                 </td>
                             </tr>
 
@@ -82,25 +83,22 @@ class Tasks extends Component {
 
     }
     handlerClickUser(taskID) {
-        console.log("taskId", taskID);
         this.props.history.push(`/tasks/${taskID}`);
     }
 
 
     handlerClickDeleteTask(taskID) {
 
-        //   deleteUserTask(taskId);
+        //  deleteUserTask(taskID);
         this.props.deleteTask(taskID);
     }
     handlerClickEditTask(taskID) {
-        console.log("handlerClickEditTask", taskID);
 
         //   deleteUserTask(taskId);
-        this.props.editTask(taskID);
+     //   this.props.editTask(taskID);
         
     }
     handlerClickViewTask(taskID) {
-        console.log("taskId", taskID);
 
         //   deleteUserTask(taskId);
         //this.props.viewTask(taskId);
@@ -118,22 +116,11 @@ const mapDispatchToProps = dispatch => {
     return {
         getTasks(pageNumber) {
             dispatch(getTasksAction(pageNumber));
-        }
-        ,
-        deleteTask(taskID) {
-            console.log("deleteTask(taskID)", taskID);
-
-            dispatch(deleteUserTask(taskID));
-        }
-        ,
-        editTask(taskID) {
-            console.log("editTask(taskID)", taskID);
-
-            dispatch(editUserTask(taskID));
         },
-
+       
         viewTask(taskID) {
-            dispatch(viewUserTask(taskID));
+            taskID="5f0b19c11f072e0984459ff5";
+            dispatch(getTaskAction(taskID));
         }
     }
 }

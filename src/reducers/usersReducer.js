@@ -30,11 +30,7 @@ const usersReducer = (state = initState, action) => {
       case "SINGUP":
         state = { ...state, isSignup: action.payload }
         break;
-  //
-    case "SET_TASKS":
-      state = { ...state, users: action.payload }
-      break;
-      //
+
     default:
       break;
   }
