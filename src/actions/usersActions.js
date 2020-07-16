@@ -24,7 +24,6 @@ export const loginAction = (username, password) => {
         const token = data.token;
 
         return dispach({
-
           type: "LOGIN",
           payload: isLogged,
           token: token
@@ -73,6 +72,7 @@ export const logoutAction = () => {
 
 
 export const getTasksAction = (pageNumber) => {
+  return async (dispach) => {
 
   const options = {
     method: 'GET',
@@ -81,7 +81,6 @@ export const getTasksAction = (pageNumber) => {
       "Authorization": "Bearer " + window.localStorage.Autorization
     }
   }
-  return async (dispach) => {
 
     fetch(`https://vladikonov.herokuapp.com/tasks?page=${pageNumber}`, options)
       .then(function (response) {
@@ -108,12 +107,12 @@ export const getTaskAction = (taskId) => {
     }
     fetch(`https://vladikonov.herokuapp.com/tasks/${taskId}`, options)
       .then(function (response) {
+        console.log("response",response)
         return response.json();
       }).then(function (data) {
-
         return dispach({
-          type: "SET_TASK",
-          payload: data.data
+          type: "GET_TASK",
+          payload: data
         })
       });
   }
@@ -150,7 +149,7 @@ export const postTaskAction = (title, description) => {
 }
 
 
-export const deleteUserTask = (taskId) => {
+export const deleteTaskAction = (taskId) => {
   return async (dispach) => {
 
 
@@ -164,12 +163,14 @@ export const deleteUserTask = (taskId) => {
 
     fetch(`https://vladikonov.herokuapp.com/tasks/${taskId}`, options)
       .then(function (response) {
+        
         return response.json();
       }).then(function (data) {
+        const isDelete = (typeof data.token !== 'undefined' && data.token !== '');
 
         return dispach({
           type: "DELETE_TASK",
-          payload: data
+          payload: isDelete
         })
       });
   }
@@ -177,7 +178,7 @@ export const deleteUserTask = (taskId) => {
 
 
 
-export const editUserTask = (taskId) => {
+export const editTaskAction = (taskId) => {
   return async (dispach) => {
 
 

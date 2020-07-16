@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getTasksAction, getTaskAction } from '../actions/usersActions';
+import { getTasksAction, getTaskAction,deleteTaskAction,editTaskAction } from '../actions/usersActions';
 
 class Tasks extends Component {
     componentDidMount() {
         this.props.getTasks(1);
         this.props.viewTask(this.taskId);
+        this.props.deletTask(this.taskId);
+        this.props.deletTask(this.taskId);
+         this.props.editTask(this.taskId);
     }
 
     get pageNumber() {
 
         const isPageNumberExist = typeof this.props.match.params.pageNumber !== 'undefined';
-        return (isPageNumberExist ? this.props.match.params.pageNumber : 1);
+        return (isPageNumberExist ? this.props.match.params.pageNumber : 2);
     }
 
 
@@ -45,9 +48,9 @@ class Tasks extends Component {
                                 <td >{task.createdDate}</td>
 
                                 <td >
+                                <span className="pointer" onClick={() => this.handlerClickViewTask(task._id)}>view  </span>
                                     <span className="pointer" onClick={() => this.handlerClickDeleteTask(task._id)}>delete  </span>
-                                    <span className="pointer" onClick={() => this.handlerClickViewTask(task._id)}>edit  </span>
-                                    <span className="pointer" onClick={() => this.handlerClickEditTask(task._id)}>view  </span>
+                                    <span className="pointer" onClick={() => this.handlerClickEditTask(task._id)}>edit  </span>
                                 </td>
                             </tr>
 
@@ -83,32 +86,31 @@ class Tasks extends Component {
 
     }
     handlerClickUser(taskID) {
-        this.props.history.push(`/tasks/${taskID}`);
+        this.props.history.push(`/task/${taskID}`);
     }
 
 
     handlerClickDeleteTask(taskID) {
-
+        if ((taskID !== '') && (taskID !== 'undefind')) {
         //  deleteUserTask(taskID);
-        this.props.deleteTask(taskID);
-    }
-    handlerClickEditTask(taskID) {
+        this.props.deletTask(taskID);
+        this.props.history.push('/tasks');
 
-        //   deleteUserTask(taskId);
-     //   this.props.editTask(taskID);
-        
+     } }
+
+    handlerClickEditTask(taskID) {
+        this.props.history.push(`/task/${taskID}`);
+
     }
     handlerClickViewTask(taskID) {
-
-        //   deleteUserTask(taskId);
-        //this.props.viewTask(taskId);
-        this.props.history.push(`/tasks/${taskID}`);
+        this.props.history.push(`/task/${taskID}`);
     }
 }
 
 const mapStateToProps = state => {
     return {
-        tasks: state.taskReducer.tasks
+        tasks: state.taskReducer.tasks,
+       // isDelete: state.taskReducer.
     }
 }
 
@@ -119,8 +121,13 @@ const mapDispatchToProps = dispatch => {
         },
        
         viewTask(taskID) {
-            taskID="5f0b19c11f072e0984459ff5";
             dispatch(getTaskAction(taskID));
+        },
+        deletTask(taskID){
+            dispatch(deleteTaskAction(taskID));  
+        },
+        editTask(taskID){
+            dispatch(editTaskAction(taskID));  
         }
     }
 }

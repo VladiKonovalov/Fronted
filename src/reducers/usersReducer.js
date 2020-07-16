@@ -8,13 +8,7 @@ const initState = {
     total: null,
     total_pages: null,
     data: [],
-  },
-  userActive: {
-    id: null,
-    first_name: null,
-    last_name: null,
-    avatar: null
-  },
+  }
 
   
 }

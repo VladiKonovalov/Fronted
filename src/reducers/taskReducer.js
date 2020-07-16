@@ -9,16 +9,16 @@ tasks: {
     _id: null,
     title: null,
     description: null,
-
+    creator:null,
+    createdDate :null
   },
 } 
 
 const taskReducer = (state = initState, action) =>{
 
  switch(action.type){
-     case "SET_TASK":
-
-      state = { ...state, userActive: action.payload,autorization:action.token }
+     case "GET_TASK":
+      state = { ...state, taskActive: action.payload,autorization:action.token }
 
       break;
       case "POST_TASK":
@@ -30,11 +30,9 @@ const taskReducer = (state = initState, action) =>{
           break;
       case "DELETE_TASK":
         
-        state = { ...state, taskActive: action.payload,autorization:action.token }
+        state = { ...state, isDelete: action.payload,autorization:action.token }
         break;
-        case "VIEW_TASK":
-          state = { ...state, taskActive: action.payload,autorization:action.token }
-          break;
+       
      default: 
      break;
  }
