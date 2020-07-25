@@ -110,9 +110,10 @@ export const getTaskAction = (taskId) => {
         console.log("response",response)
         return response.json();
       }).then(function (data) {
+        const taskActive = data 
         return dispach({
           type: "GET_TASK",
-          payload: data
+          payload: taskActive
         })
       });
   }

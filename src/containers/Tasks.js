@@ -4,9 +4,8 @@ import { getTasksAction, getTaskAction,deleteTaskAction,editTaskAction } from '.
 
 class Tasks extends Component {
     componentDidMount() {
-        this.props.getTasks(1);
+        this.props.getTasks(2);
         this.props.viewTask(this.taskId);
-        this.props.deletTask(this.taskId);
         this.props.deletTask(this.taskId);
          this.props.editTask(this.taskId);
     }
@@ -99,10 +98,12 @@ class Tasks extends Component {
      } }
 
     handlerClickEditTask(taskID) {
+        this.props.editTask(taskID);
         this.props.history.push(`/task/${taskID}`);
 
     }
     handlerClickViewTask(taskID) {
+        this.props.viewTask(taskID);
         this.props.history.push(`/task/${taskID}`);
     }
 }
@@ -110,17 +111,21 @@ class Tasks extends Component {
 const mapStateToProps = state => {
     return {
         tasks: state.taskReducer.tasks,
-       // isDelete: state.taskReducer.
+        taskActive: state.taskReducer.taskActive
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        getTask(taskID) {
+            dispatch(getTaskAction(taskID));
+          },
+
         getTasks(pageNumber) {
             dispatch(getTasksAction(pageNumber));
         },
        
-        viewTask(taskID) {
+        viewTask (taskID) {
             dispatch(getTaskAction(taskID));
         },
         deletTask(taskID){

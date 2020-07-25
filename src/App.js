@@ -55,7 +55,6 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    siteName: state.sitesReducer.siteName,
     isLogged: state.usersReducer.isLogged
   }
 }

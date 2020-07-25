@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getTaskAction, postTaskAction } from '../actions/usersActions';
+import {  postTaskAction } from '../actions/usersActions';
 import TaskForm from '../components/TaskForm';
 
 class Task extends Component {
+  
   componentDidMount() {
-    this.props.getTask(this.taskID);
+  //  this.props.getTask(this.taskID);
 
   }
 
@@ -50,10 +51,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 
   return {
-    getTask(taskID) {
-      console.log("taskID",taskID)
-      dispatch(getTaskAction(taskID));
-    },
+    // getTask(taskID) {
+    //   console.log("taskID 1111",taskID)
+    //   dispatch(getTaskAction(taskID));
+    // },
 
     createTask: (title, description) => {
       dispatch(postTaskAction(title, description));
