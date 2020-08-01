@@ -29,7 +29,7 @@ class App extends Component {
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul className="navbar-nav">
               <li className="nav-item">            <NavLink className="nav-link" exact to="/"> Home </NavLink></li>
-              <li className="nav-item">            <NavLink className="nav-link" exact to="/users"> Users </NavLink></li>
+              <li className="nav-item">            <NavLink className="nav-link" exact to="/users"> Users Manager</NavLink></li>
 
               <li className="nav-item">      <NavLink className="nav-link" to="/tasks"> Tasks </NavLink></li>
               <li className="nav-item">        <NavLink className="nav-link" to="/task/1"> Create new task </NavLink></li>

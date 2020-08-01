@@ -13,7 +13,15 @@ class Users extends Component {
         return (isPageNumberExist ? this.props.match.params.pageNumber : 2);
     }
 
+    handlerisAdmin = (e) => {
 
+        if (e===true ){
+
+    return 'true';}
+
+ return 'false';
+}
+    
     render() {
 
         const pagesButtonRender = this.getPagesButtonRender();
@@ -38,7 +46,7 @@ console.log("it is null",_data);}
                             <tr key={userID}> 
                                 <th scope="row" > {userID +1}</th>
                                 <td >{user.username}</td>
-                                <td >{user.isAdmin}</td>
+                                <td >      {''+user.isAdmin}</td>
                                 <td >{user._id}</td>
                                 <td > 000</td>
                                 <td >

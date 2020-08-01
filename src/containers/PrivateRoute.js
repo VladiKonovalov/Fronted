@@ -7,8 +7,12 @@ import { Route, Redirect } from 'react-router-dom';
 const PrivateRoute = ({ path, comp: Component, isLogged, ...rest }) => {
     return (
     <Route path={path}{...rest} render={props => {
-        if (isLogged === true) {
-            return <Component {...props}{...rest} />;
+            if (isLogged === true) {   
+                //need to fix not by username , but by IsAdmin #1 bug
+            if (path === '/users' && window.localStorage.getItem('userName')=== 'vladi') {
+                return <Redirect to= "/"/>
+            }
+                    return <Component {...props}{...rest} />;
         }
         return <Redirect to= "/login"/>
    }}/>
