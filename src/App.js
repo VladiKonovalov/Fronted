@@ -6,7 +6,7 @@ import Tasks from './containers/Tasks';
 import Task from './containers/Task';
 import Login from './containers/Login';
 import Singup from './containers/Singup';
-
+import Users from './containers/Users';
 import PrivateRoute from './containers/PrivateRoute';
 import { logoutAction } from './actions/usersActions';
 
@@ -29,6 +29,8 @@ class App extends Component {
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul className="navbar-nav">
               <li className="nav-item">            <NavLink className="nav-link" exact to="/"> Home </NavLink></li>
+              <li className="nav-item">            <NavLink className="nav-link" exact to="/users"> Users </NavLink></li>
+
               <li className="nav-item">      <NavLink className="nav-link" to="/tasks"> Tasks </NavLink></li>
               <li className="nav-item">        <NavLink className="nav-link" to="/task/1"> Create new task </NavLink></li>
               {loginLink}
@@ -43,6 +45,8 @@ class App extends Component {
           <Route path="/singup" component={Singup} />
           <PrivateRoute path="/tasks/:pageNumber?" comp={Tasks} />
           <PrivateRoute path="/task/:taskId" comp={Task} />
+          <PrivateRoute path="/users" comp={Users} />
+
         </div>
         
       </Router>
@@ -64,6 +68,9 @@ const mapDispatchToProps = dispatch => {
 
     logout() {
       dispatch(logoutAction());
+      window.localStorage.removeItem('Autorization');
+      window.localStorage.removeItem('userName');
+      window.localStorage.removeItem('isLogged');
     }
 
   }
