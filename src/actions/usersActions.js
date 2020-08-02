@@ -18,18 +18,19 @@ export const loginAction = (username, password) => {
 
     fetch('https://vladikonov.herokuapp.com/users/login', options)
       .then(function (response) {
-        console.log("login",response.status);
 
         return response.json();
       }).then(function (data) {
         const isLogged = (typeof data.token !== 'undefined' && data.token !== '');
         const token = data.token;
         const username=data.username;
+        const isAdmin=data.isAdmin;
         return dispach({
           type: "LOGIN",
           payload: isLogged,
           token: token,
-          username:username
+          username:username,
+          isAdmin:isAdmin
         })
       });
   }
@@ -72,7 +73,8 @@ export const logoutAction = () => {
     type: "LOGIN",
     payload: false,
 token:undefined,
-username:''
+username:'',
+isAdmin: false
   }
  
 }

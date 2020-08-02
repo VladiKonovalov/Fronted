@@ -23,6 +23,7 @@ const usersReducer = (state = initState, action) => {
       window.localStorage.setItem('isLogged', action.payload);
       window.localStorage.setItem('userName', action.username);
       window.localStorage.setItem('Autorization',action.token);
+      window.localStorage.setItem('isAdmin',action.isAdmin)
       state = { ...state, isLogged: action.payload }
       break;
 
